@@ -95,7 +95,6 @@ namespace DNS_Manager
             // Add unavailable methods to list
 
             string[] RequiredMethods = {
-                                        "domain-list_domains",
                                         "dns-list_records",
                                         "dns-add_record",
                                         "dns-remove_record"
