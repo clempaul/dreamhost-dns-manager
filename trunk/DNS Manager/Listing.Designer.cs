@@ -30,13 +30,13 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Listing));
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolStripComboBoxDomains = new System.Windows.Forms.ToolStripComboBox();
-            this.toolStripButtonSelectDomain = new System.Windows.Forms.ToolStripButton();
+            this.toolStripComboBoxZones = new System.Windows.Forms.ToolStripComboBox();
+            this.toolStripButtonSelectZone = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonReload = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonAdd = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonEdit = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonDelete = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonSettings = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
@@ -64,13 +64,13 @@
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripComboBoxDomains,
-            this.toolStripButtonSelectDomain,
+            this.toolStripComboBoxZones,
+            this.toolStripButtonSelectZone,
             this.toolStripButtonReload,
             this.toolStripSeparator3,
             this.toolStripButtonAdd,
-            this.toolStripButton2,
-            this.toolStripButton3,
+            this.toolStripButtonEdit,
+            this.toolStripButtonDelete,
             this.toolStripSeparator4,
             this.toolStripButtonSettings,
             this.toolStripSeparator2,
@@ -81,23 +81,23 @@
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
             // 
-            // toolStripComboBoxDomains
+            // toolStripComboBoxZones
             // 
-            this.toolStripComboBoxDomains.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.toolStripComboBoxDomains.DropDownWidth = 200;
-            this.toolStripComboBoxDomains.Name = "toolStripComboBoxDomains";
-            this.toolStripComboBoxDomains.Size = new System.Drawing.Size(200, 25);
-            this.toolStripComboBoxDomains.ToolTipText = "Domain";
+            this.toolStripComboBoxZones.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.toolStripComboBoxZones.DropDownWidth = 200;
+            this.toolStripComboBoxZones.Name = "toolStripComboBoxZones";
+            this.toolStripComboBoxZones.Size = new System.Drawing.Size(200, 25);
+            this.toolStripComboBoxZones.ToolTipText = "Zone";
             // 
-            // toolStripButtonSelectDomain
+            // toolStripButtonSelectZone
             // 
-            this.toolStripButtonSelectDomain.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonSelectDomain.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonSelectDomain.Image")));
-            this.toolStripButtonSelectDomain.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonSelectDomain.Name = "toolStripButtonSelectDomain";
-            this.toolStripButtonSelectDomain.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButtonSelectDomain.Text = "Select Domain";
-            this.toolStripButtonSelectDomain.Click += new System.EventHandler(this.toolStripButtonSelectDomain_Click);
+            this.toolStripButtonSelectZone.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonSelectZone.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonSelectZone.Image")));
+            this.toolStripButtonSelectZone.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonSelectZone.Name = "toolStripButtonSelectZone";
+            this.toolStripButtonSelectZone.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonSelectZone.Text = "Select Zone";
+            this.toolStripButtonSelectZone.Click += new System.EventHandler(this.toolStripButtonSelectDomain_Click);
             // 
             // toolStripButtonReload
             // 
@@ -124,25 +124,25 @@
             this.toolStripButtonAdd.Text = "Add Record";
             this.toolStripButtonAdd.Click += new System.EventHandler(this.toolStripButtonAdd_Click);
             // 
-            // toolStripButton2
+            // toolStripButtonEdit
             // 
-            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
-            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton2.Text = "toolStripButton2";
-            this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click);
+            this.toolStripButtonEdit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonEdit.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonEdit.Image")));
+            this.toolStripButtonEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonEdit.Name = "toolStripButtonEdit";
+            this.toolStripButtonEdit.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonEdit.Text = "Edit Record";
+            this.toolStripButtonEdit.Click += new System.EventHandler(this.toolStripButtonEdit_Click);
             // 
-            // toolStripButton3
+            // toolStripButtonDelete
             // 
-            this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton3.Image")));
-            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton3.Name = "toolStripButton3";
-            this.toolStripButton3.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton3.Text = "toolStripButtonDelete";
-            this.toolStripButton3.Click += new System.EventHandler(this.toolStripButton3_Click);
+            this.toolStripButtonDelete.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonDelete.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonDelete.Image")));
+            this.toolStripButtonDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonDelete.Name = "toolStripButtonDelete";
+            this.toolStripButtonDelete.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonDelete.Text = "Delete Record";
+            this.toolStripButtonDelete.Click += new System.EventHandler(this.toolStripButtonDelete_Click);
             // 
             // toolStripSeparator4
             // 
@@ -336,17 +336,17 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.ToolStripComboBox toolStripComboBoxDomains;
+        private System.Windows.Forms.ToolStripComboBox toolStripComboBoxZones;
         private System.Windows.Forms.ToolStripButton toolStripButtonReload;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.DataGridView dataGridView;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel;
-        private System.Windows.Forms.ToolStripButton toolStripButtonSelectDomain;
+        private System.Windows.Forms.ToolStripButton toolStripButtonSelectZone;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.ToolStripButton toolStripButtonAdd;
-        private System.Windows.Forms.ToolStripButton toolStripButton2;
-        private System.Windows.Forms.ToolStripButton toolStripButton3;
+        private System.Windows.Forms.ToolStripButton toolStripButtonEdit;
+        private System.Windows.Forms.ToolStripButton toolStripButtonDelete;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.DataGridViewTextBoxColumn account_id;
         private System.Windows.Forms.DataGridViewTextBoxColumn zone;

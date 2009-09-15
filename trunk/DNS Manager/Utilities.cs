@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace DNS_Manager
+﻿namespace DNS_Manager
 {
     internal static class Utilities
     {

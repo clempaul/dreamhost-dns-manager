@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using clempaul;
 using clempaul.Dreamhost.ResponseData;
@@ -56,8 +53,34 @@ namespace DNS_Manager
 
         void DeleteRecord_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            MessageBox.Show("Record Deleted", "DNS Manager", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            this.LoadRecords();
+            if (e.Error == null)
+            {
+                MessageBox.Show("Record Deleted!", "DNS Manager", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.LoadRecords();
+            }
+            else
+            {
+                if (e.Error.Message.Contains("no_such"))
+                {
+                    MessageBox.Show("Record not found.\nTry refreshing the record list to make sure it's not been deleted already.", "DNS Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else if (e.Error.Message.Contains("internal_error"))
+                {
+                    if (MessageBox.Show("An internal error has occurred", "DNS Manager", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error) == DialogResult.Retry)
+                    {
+                        this.DeleteRecord.RunWorkerAsync((DNSRecord)this.dataGridView.SelectedRows[0].DataBoundItem);
+                        return;
+                    }
+                }
+                else
+                {
+                    if (MessageBox.Show(e.Error.Message, "DNS Manager", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error) == DialogResult.Retry)
+                    {
+                        this.DeleteRecord.RunWorkerAsync((DNSRecord)this.dataGridView.SelectedRows[0].DataBoundItem);
+                        return;
+                    }
+                }
+            }
         }
 
         void DeleteRecord_DoWork(object sender, DoWorkEventArgs e)
@@ -73,36 +96,34 @@ namespace DNS_Manager
 
         void GetRecords_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            string zone = this.toolStripComboBoxDomains.Text ?? string.Empty;
-
-            this.toolStripComboBoxDomains.Items.Clear();
-
-            foreach (DNSRecord d in this.DNSRecords)
+            if (e.Error != null)
             {
-                if (!this.toolStripComboBoxDomains.Items.Contains(d.zone))
+                string zone = this.toolStripComboBoxZones.Text ?? string.Empty;
+
+                this.toolStripComboBoxZones.Items.Clear();
+
+                foreach (DNSRecord d in this.DNSRecords)
                 {
-                    this.toolStripComboBoxDomains.Items.Add(d.zone);
+                    if (!this.toolStripComboBoxZones.Items.Contains(d.zone))
+                    {
+                        this.toolStripComboBoxZones.Items.Add(d.zone);
+                    }
                 }
+
+                this.toolStripStatusLabel.Text = string.Empty;
+
+                this.toolStripComboBoxZones.Text = zone;
+                this.SetZone();
             }
-
-            this.toolStripStatusLabel.Text = string.Empty;
-
-            this.toolStripComboBoxDomains.Text = zone;
-            this.SetZone();
+            else
+            {
+                this.toolStripStatusLabel.Text = "Unable to load records... Please try again. (" + e.Error.Message + ")";
+            }
         }
 
         void GetRecords_DoWork(object sender, DoWorkEventArgs e)
         {
             this.DNSRecords = this.API.DNS.ListRecords();
-
-            if (e.Argument != null)
-            {
-                e.Result = true;
-            }
-            else
-            {
-                e.Result = false;
-            }
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -112,7 +133,14 @@ namespace DNS_Manager
 
         private void visitWebsiteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("http://software.clempaul.me.uk/");
+            try
+            {
+                System.Diagnostics.Process.Start("http://software.clempaul.me.uk/");
+            }
+            catch (Exception x)
+            {
+                MessageBox.Show(x.Message, "DNS Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void toolStripButtonSettings_Click(object sender, EventArgs e)
@@ -130,9 +158,9 @@ namespace DNS_Manager
             this.SetZone();
         }
 
-        private void toolStripButton3_Click(object sender, EventArgs e)
+        private void toolStripButtonDelete_Click(object sender, EventArgs e)
         {
-            if (this.dataGridView.SelectedRows.Count == 1)
+            if (this.dataGridView.SelectedRows.Count == 1 && !this.DeleteRecord.IsBusy)
             {
                 DNSRecord record = (DNSRecord)this.dataGridView.SelectedRows[0].DataBoundItem;
 
@@ -156,7 +184,7 @@ namespace DNS_Manager
             }
         }
 
-        private void toolStripButton2_Click(object sender, EventArgs e)
+        private void toolStripButtonEdit_Click(object sender, EventArgs e)
         {
             if (this.dataGridView.SelectedRows.Count == 1)
             {
@@ -178,7 +206,7 @@ namespace DNS_Manager
 
         private void SetZone()
         {
-            string zoneValue = this.toolStripComboBoxDomains.Text ?? string.Empty;
+            string zoneValue = this.toolStripComboBoxZones.Text ?? string.Empty;
 
             this.dataGridView.DataSource = (from d in this.DNSRecords
                                             where d.zone == zoneValue
