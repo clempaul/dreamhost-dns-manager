@@ -36,10 +36,8 @@ namespace DNS_Manager
             this.comboBoxType.Enabled = false;
 
             this.EditRecord.DoWork += new DoWorkEventHandler(EditRecord_DoWork);
-            this.EditRecord.RunWorkerCompleted += new RunWorkerCompletedEventHandler(AddRecord_RunWorkerCompleted);
+            this.EditRecord.RunWorkerCompleted += new RunWorkerCompletedEventHandler(EditRecord_RunWorkerCompleted);
         }
-
-        
 
         public AddEdit(DreamhostAPI API)
         {
@@ -52,6 +50,69 @@ namespace DNS_Manager
         }
 
         void AddRecord_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (e.Error == null)
+            {
+                this.DialogResult = DialogResult.OK;
+                this.Close();
+            }
+            else
+            {
+                if (e.Error.Message == "CNAME_already_on_record")
+                {
+                    MessageBox.Show("There can only be one CNAME for this record.", "DNS Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else if (e.Error.Message == "CNAME_must_be_only_record")
+                {
+                    MessageBox.Show("A CNAME already exists for this record.", "DNS Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else if (e.Error.Message.Contains("invalid_record"))
+                {
+                    MessageBox.Show("This record is invalid:\n" + e.Error.Message.Replace("invalid_record\t", "").CapitaliseFirstLetter(), "DNS Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else if (e.Error.Message.Contains("invalid_value"))
+                {
+                    MessageBox.Show("This value is invalid:\n" + e.Error.Message.Replace("invalid_value\t", "").CapitaliseFirstLetter(), "DNS Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else if (e.Error.Message == "no_such_zone")
+                {
+                    MessageBox.Show("Unable to add record to this zone", "DNS Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else if (e.Error.Message == "record_already_exists_not_editable")
+                {
+                    MessageBox.Show("This record already exists and is not editable", "DNS Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else if (e.Error.Message == "record_already_exists_remove_first")
+                {
+                    MessageBox.Show("This record already exists.\nPlease try editing it or removing it first.", "DNS Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else if (e.Error.Message.Contains("internal_error"))
+                {
+                    if (MessageBox.Show("An internal error has occurred", "DNS Manager", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error) == DialogResult.Retry)
+                    {
+                        this.AddRecord.RunWorkerAsync(this.BuildRecord());
+                        return;
+                    }
+                }
+                else
+                {
+                    if (MessageBox.Show(e.Error.Message, "DNS Manager", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error) == DialogResult.Retry)
+                    {
+                        this.AddRecord.RunWorkerAsync(this.BuildRecord());
+                        return;
+                    }
+                }
+
+                this.buttonSave.Enabled = true;
+                this.buttonCancel.Enabled = true;
+                this.textBoxComment.Enabled = true;
+                this.textBoxValue.Enabled = true;
+                this.textBoxRecord.Enabled = true;
+                this.comboBoxType.Enabled = true;
+            }
+        }
+
+        void EditRecord_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             this.DialogResult = DialogResult.OK;
             this.Close();
@@ -96,30 +157,25 @@ namespace DNS_Manager
 
                 if (this.IsEdit)
                 {
-                    this.EditRecord.RunWorkerAsync(
-                        new DNSRecord
-                        {
-                            record = this.textBoxRecord.Text,
-                            value = this.textBoxValue.Text,
-                            type = this.comboBoxType.Text,
-                            comment = this.textBoxComment.Text
-                        }
-                        );
+                    this.EditRecord.RunWorkerAsync(this.BuildRecord());
                 }
                 else
                 {
-                    this.AddRecord.RunWorkerAsync(
-                        new DNSRecord
+                    this.AddRecord.RunWorkerAsync(this.BuildRecord());
+                }
+            }
+
+        }
+
+        private DNSRecord BuildRecord()
+        {
+            return new DNSRecord
                         {
                             record = this.textBoxRecord.Text,
                             value = this.textBoxValue.Text,
                             type = this.comboBoxType.Text,
                             comment = this.textBoxComment.Text
-                        }
-                        );
-                }
-            }
-
+                        };
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)
