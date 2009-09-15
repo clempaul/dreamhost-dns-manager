@@ -114,8 +114,38 @@ namespace DNS_Manager
 
         void EditRecord_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            this.DialogResult = DialogResult.OK;
-            this.Close();
+            if (e.Error == null)
+            {
+                this.DialogResult = DialogResult.OK;
+                this.Close();
+            }
+            else
+            {
+                if (e.Error.Message == "internal_error_could_not_destroy_record"
+                    || e.Error.Message == "internal_error_could_not_update_zone")
+                {
+                    if (MessageBox.Show("An internal error has occurred.", "DNS Manager", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error) == DialogResult.Retry)
+                    {
+                        this.EditRecord.RunWorkerAsync(this.BuildRecord());
+                        return;
+                    }
+                }
+                else if (e.Error.Message.Contains("invalid_value"))
+                {
+                    MessageBox.Show("This value is invalid:\n" + 
+                        e.Error.Message.Replace("invalid_value\t", "").CapitaliseFirstLetter()
+                        + "\nThe previous record has been deleted.", "DNS Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    this.IsEdit = false;
+                    this.textBoxRecord.Enabled = true;
+                    this.comboBoxType.Enabled = true;
+                }
+
+                this.buttonSave.Enabled = true;
+                this.buttonCancel.Enabled = true;
+                this.textBoxComment.Enabled = true;
+                this.textBoxValue.Enabled = true;
+            }
         }
 
         void AddRecord_DoWork(object sender, DoWorkEventArgs e)
@@ -127,8 +157,34 @@ namespace DNS_Manager
         void EditRecord_DoWork(object sender, DoWorkEventArgs e)
         {
             this.API.DNS.RemoveRecord(this.Record);
-            System.Threading.Thread.Sleep(3000);
-            this.API.DNS.AddRecord((DNSRecord)e.Argument);
+
+            string[] retryErrors = {
+                                    "CNAME_must_be_only_record",
+                                    "CNAME_already_on_record",
+                                    "record_already_exists_remove_first",
+                                    "internal_error_updating_zone",
+                                    "internal_error_could_not_load_zone",
+                                    "internal_error_could_not_add_record"
+                                   };
+
+            bool finish = false;
+
+            while (!finish)
+            {
+                try
+                {
+                    this.API.DNS.AddRecord((DNSRecord)e.Argument);
+                    finish = true;
+                }
+                catch (Exception x)
+                {
+                    if (!retryErrors.Contains(x.Message))
+                    {
+                        throw x;
+                    }
+                }
+            }
+
             System.Threading.Thread.Sleep(3000);
         }
 
