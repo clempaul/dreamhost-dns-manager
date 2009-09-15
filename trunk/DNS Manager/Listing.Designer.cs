@@ -314,7 +314,7 @@
             this.Controls.Add(this.toolStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Listing";
-            this.Text = "DNS Manager";
+            this.Text = "Dreamhost DNS Manager";
             this.Load += new System.EventHandler(this.Listing_Load);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();

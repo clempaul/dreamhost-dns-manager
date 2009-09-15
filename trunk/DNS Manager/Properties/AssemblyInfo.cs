@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("DNS Manager")]
+[assembly: AssemblyTitle("Dreamhost DNS Manager")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Paul Clement")]
-[assembly: AssemblyProduct("DNS Manager")]
+[assembly: AssemblyProduct("Dreamhost DNS Manager")]
 [assembly: AssemblyCopyright("Copyright © Paul Clement 2009")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
