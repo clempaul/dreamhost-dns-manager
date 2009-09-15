@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using clempaul.Dreamhost.ResponseData;
 using clempaul;
+using clempaul.Dreamhost.ResponseData;
 
 namespace DNS_Manager
 {
@@ -139,6 +135,14 @@ namespace DNS_Manager
                     this.IsEdit = false;
                     this.textBoxRecord.Enabled = true;
                     this.comboBoxType.Enabled = true;
+                }
+                else
+                {
+                    if (MessageBox.Show(e.Error.Message, "DNS Manager", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error) == DialogResult.Retry)
+                    {
+                        this.EditRecord.RunWorkerAsync(this.BuildRecord());
+                        return;
+                    }
                 }
 
                 this.buttonSave.Enabled = true;
