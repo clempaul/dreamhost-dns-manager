@@ -55,18 +55,18 @@ namespace DNS_Manager
         {
             if (e.Error == null)
             {
-                MessageBox.Show("Record Deleted!", "DNS Manager", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Record Deleted!", "Dreamhost DNS Manager", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.LoadRecords();
             }
             else
             {
                 if (e.Error.Message.Contains("no_such"))
                 {
-                    MessageBox.Show("Record not found.\nTry refreshing the record list to make sure it's not been deleted already.", "DNS Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Record not found.\nTry refreshing the record list to make sure it's not been deleted already.", "Dreamhost DNS Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else if (e.Error.Message.Contains("internal_error"))
                 {
-                    if (MessageBox.Show("An internal error has occurred", "DNS Manager", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error) == DialogResult.Retry)
+                    if (MessageBox.Show("An internal error has occurred", "Dreamhost DNS Manager", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error) == DialogResult.Retry)
                     {
                         this.DeleteRecord.RunWorkerAsync((DNSRecord)this.dataGridView.SelectedRows[0].DataBoundItem);
                         return;
@@ -74,7 +74,7 @@ namespace DNS_Manager
                 }
                 else
                 {
-                    if (MessageBox.Show(e.Error.Message, "DNS Manager", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error) == DialogResult.Retry)
+                    if (MessageBox.Show(e.Error.Message, "Dreamhost DNS Manager", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error) == DialogResult.Retry)
                     {
                         this.DeleteRecord.RunWorkerAsync((DNSRecord)this.dataGridView.SelectedRows[0].DataBoundItem);
                         return;
@@ -139,7 +139,7 @@ namespace DNS_Manager
             }
             catch (Exception x)
             {
-                MessageBox.Show(x.Message, "DNS Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(x.Message, "Dreamhost DNS Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -166,9 +166,9 @@ namespace DNS_Manager
 
                 if (!record.editable)
                 {
-                    MessageBox.Show("This record is not editable", "DNS Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("This record is not editable", "Dreamhost DNS Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-                else if (MessageBox.Show("Are you sure you want to delete the record for " + record.record + "?", "DNS Manager", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                else if (MessageBox.Show("Are you sure you want to delete the record for " + record.record + "?", "Dreamhost DNS Manager", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     this.toolStripStatusLabel.Text = "Deleting record...";
                     this.DeleteRecord.RunWorkerAsync(record);
@@ -192,7 +192,7 @@ namespace DNS_Manager
 
                 if (!record.editable)
                 {
-                    MessageBox.Show("This record is not editable", "DNS Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("This record is not editable", "Dreamhost DNS Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else
                 {

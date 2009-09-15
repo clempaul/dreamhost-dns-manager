@@ -56,35 +56,35 @@ namespace DNS_Manager
             {
                 if (e.Error.Message == "CNAME_already_on_record")
                 {
-                    MessageBox.Show("There can only be one CNAME for this record.", "DNS Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("There can only be one CNAME for this record.", "Dreamhost DNS Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else if (e.Error.Message == "CNAME_must_be_only_record")
                 {
-                    MessageBox.Show("A CNAME already exists for this record.", "DNS Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("A CNAME already exists for this record.", "Dreamhost DNS Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else if (e.Error.Message.Contains("invalid_record"))
                 {
-                    MessageBox.Show("This record is invalid:\n" + e.Error.Message.Replace("invalid_record\t", "").CapitaliseFirstLetter(), "DNS Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("This record is invalid:\n" + e.Error.Message.Replace("invalid_record\t", "").CapitaliseFirstLetter(), "Dreamhost DNS Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else if (e.Error.Message.Contains("invalid_value"))
                 {
-                    MessageBox.Show("This value is invalid:\n" + e.Error.Message.Replace("invalid_value\t", "").CapitaliseFirstLetter(), "DNS Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("This value is invalid:\n" + e.Error.Message.Replace("invalid_value\t", "").CapitaliseFirstLetter(), "Dreamhost DNS Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else if (e.Error.Message == "no_such_zone")
                 {
-                    MessageBox.Show("Unable to add record to this zone", "DNS Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Unable to add record to this zone", "Dreamhost DNS Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else if (e.Error.Message == "record_already_exists_not_editable")
                 {
-                    MessageBox.Show("This record already exists and is not editable", "DNS Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("This record already exists and is not editable", "Dreamhost DNS Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else if (e.Error.Message == "record_already_exists_remove_first")
                 {
-                    MessageBox.Show("This record already exists.\nPlease try editing it or removing it first.", "DNS Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("This record already exists.\nPlease try editing it or removing it first.", "Dreamhost DNS Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else if (e.Error.Message.Contains("internal_error"))
                 {
-                    if (MessageBox.Show("An internal error has occurred", "DNS Manager", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error) == DialogResult.Retry)
+                    if (MessageBox.Show("An internal error has occurred", "Dreamhost DNS Manager", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error) == DialogResult.Retry)
                     {
                         this.AddRecord.RunWorkerAsync(this.BuildRecord());
                         return;
@@ -92,7 +92,7 @@ namespace DNS_Manager
                 }
                 else
                 {
-                    if (MessageBox.Show(e.Error.Message, "DNS Manager", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error) == DialogResult.Retry)
+                    if (MessageBox.Show(e.Error.Message, "Dreamhost DNS Manager", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error) == DialogResult.Retry)
                     {
                         this.AddRecord.RunWorkerAsync(this.BuildRecord());
                         return;
@@ -120,7 +120,7 @@ namespace DNS_Manager
                 if (e.Error.Message == "internal_error_could_not_destroy_record"
                     || e.Error.Message == "internal_error_could_not_update_zone")
                 {
-                    if (MessageBox.Show("An internal error has occurred.", "DNS Manager", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error) == DialogResult.Retry)
+                    if (MessageBox.Show("An internal error has occurred.", "Dreamhost DNS Manager", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error) == DialogResult.Retry)
                     {
                         this.EditRecord.RunWorkerAsync(this.BuildRecord());
                         return;
@@ -130,7 +130,7 @@ namespace DNS_Manager
                 {
                     MessageBox.Show("This value is invalid:\n" + 
                         e.Error.Message.Replace("invalid_value\t", "").CapitaliseFirstLetter()
-                        + "\nThe previous record has been deleted.", "DNS Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        + "\nThe previous record has been deleted.", "Dreamhost DNS Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                     this.IsEdit = false;
                     this.textBoxRecord.Enabled = true;
@@ -138,7 +138,7 @@ namespace DNS_Manager
                 }
                 else
                 {
-                    if (MessageBox.Show(e.Error.Message, "DNS Manager", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error) == DialogResult.Retry)
+                    if (MessageBox.Show(e.Error.Message, "Dreamhost DNS Manager", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error) == DialogResult.Retry)
                     {
                         this.EditRecord.RunWorkerAsync(this.BuildRecord());
                         return;
@@ -196,15 +196,15 @@ namespace DNS_Manager
         {
             if (this.textBoxRecord.Text == string.Empty)
             {
-                MessageBox.Show("You must enter a record", "DNS Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("You must enter a record", "Dreamhost DNS Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else if (this.comboBoxType.Text == string.Empty)
             {
-                MessageBox.Show("You must select a type", "DNS Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("You must select a type", "Dreamhost DNS Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else if (this.textBoxValue.Text == string.Empty)
             {
-                MessageBox.Show("You must enter a value", "DNS Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("You must enter a value", "Dreamhost DNS Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {

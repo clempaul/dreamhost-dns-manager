@@ -44,7 +44,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(313, 39);
             this.label1.TabIndex = 0;
-            this.label1.Text = "To use DNS Manager, you must supply your Dreamhost API Key.\r\n\r\nThis key must have" +
+            this.label1.Text = "To use Dreamhost DNS Manager, you must supply your Dreamhost API Key.\r\n\r\nThis key must have" +
                 " access to all DNS functions.";
             // 
             // label2

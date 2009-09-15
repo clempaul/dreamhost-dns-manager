@@ -53,7 +53,7 @@ namespace DNS_Manager
 
             if (this.textBoxKey.Text == string.Empty)
             {
-                MessageBox.Show("You must enter an API Key", "DNS Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("You must enter an API Key", "Dreamhost DNS Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
@@ -103,7 +103,7 @@ namespace DNS_Manager
             {
                 // Ask whether to retry.
 
-                if (MessageBox.Show(e.Error.Message, "DNS Manager", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error) == DialogResult.Retry)
+                if (MessageBox.Show(e.Error.Message, "Dreamhost DNS Manager", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error) == DialogResult.Retry)
                 {
                     this.Checker.RunWorkerAsync(this.textBoxKey.Text);
                     return;
@@ -121,7 +121,7 @@ namespace DNS_Manager
                     ErrorMessage += "\n - " + m;
                 }
 
-                MessageBox.Show(ErrorMessage, "DNS Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ErrorMessage, "Dreamhost DNS Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             // If key valid
