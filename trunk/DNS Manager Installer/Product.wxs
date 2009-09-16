@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+
+  <?define SkuName="Dreamhost DNS Manager" ?>
+  <?define RTMProductVersion="1.0.0.0" ?>
+  <?define ProductVersion="1.0.0.0" ?>
+  <?define UpgradeCode="{09F50B1C-528F-4813-80C8-790A70B0E86B}" ?>
+  <?define Manufacturer="Paul Clement" ?>
+  <?define PackageCode="*" ?>
+
+  <Product Id="{ADAC0982-8DC2-4912-B9E4-3D03B1D375E0}"
+           Name="$(var.SkuName)"
+           Language="1033"
+           Version="$(var.ProductVersion)"
+           Manufacturer="$(var.Manufacturer)"
+           UpgradeCode="$(var.UpgradeCode)">
+    <Package Id="$(var.PackageCode)"
+             Description="Dreamhost DNS Manager"
+             Manufacturer="$(var.Manufacturer)"
+             Languages="1033"
+             Compressed="yes"
+             InstallerVersion="200" />
+
+    <Icon Id='Icon' SourceFile='$(var.DNS Manager.TargetPath)' />
+    <Property Id='ARPPRODUCTICON' Secure='yes' Value='Icon' />
+
+    <Property Id='FRAMEWORK30'>
+      <RegistrySearch Id='Framework30Registry' Type='raw' Root='HKLM'
+      Key='Software\Microsoft\NET Framework Setup\NDP\v3.5' Name='Version' />
+    </Property>
+
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLDIR" />
+
+    <!--<WixVariable Id='WixUILicenseRtf' Value='License.rtf' />
+    <WixVariable Id='WixUIBannerBmp' Value='Banner.bmp' />
+    <WixVariable Id='WixUIDialogBmp' Value='Dialog.bmp' />-->
+
+    <UIRef Id='WixUI_InstallDir' />
+    <UIRef Id='WixUI_ErrorProgressText' />
+
+    <Condition Message="This plugin requires the .NET Framework 3.5 or higher.  Please download and install the latest version from http://www.microsoft.com/net/DownloadCurrent.aspx">
+      Installed OR FRAMEWORK30 >= "3.5"
+    </Condition>
+
+    <Media Id="1" Cabinet="DreamhostDNSManager.cab" EmbedCab="yes" />
+
+    <Upgrade Id="$(var.UpgradeCode)">
+      <UpgradeVersion Minimum="$(var.ProductVersion)"
+                      IncludeMinimum="yes"
+                      OnlyDetect="yes"
+                      Language="1033"
+                      Property="NEWPRODUCTFOUND" />
+
+      <!--UpgradeVersion Minimum="$(var.RTMProductVersion)"
+                      IncludeMinimum="yes"
+                      Maximum="$(var.ProductVersion)"
+                      IncludeMaximum="no"
+                      Language="1033"
+                      Property="UPGRADEFOUND" /-->
+
+    </Upgrade>
+
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="PaulClement" Name="Paul Clement">
+          <Directory Id="INSTALLDIR" Name="Dreamhost DNS Manager">
+
+            <Component Id="ProductComponent" Guid="{3DB6920D-7ABB-4f93-AC40-68DE4BE44883}">
+
+              <File Id="Executable" Name="$(var.DNS Manager.TargetFileName)" Source="$(var.DNS Manager.TargetPath)" DiskId="1" />
+              <File Id="DreamhostAPI" Name="DreamhostAPI.dll" Source="$(var.DNS Manager.TargetDir)DreamhostAPI.dll" DiskId="1" />
+              <File Id="AppConfig" Name="DNS Manager.exe.config" Source="$(var.DNS Manager.TargetDir)DNS Manager.exe.config" DiskId="1" />
+
+            </Component>
+          </Directory>
+        </Directory>
+      </Directory>
+
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="StartMenuPaulClement" Name="Paul Clement" />
+      </Directory>
+    </Directory>
+
+
+    <DirectoryRef Id="StartMenuPaulClement">
+      <Component Id="ApplicationShortcut" Guid="{7BE38C2C-B7CC-4c7f-BAB9-F1AAC5EAA9F9}">
+        <Shortcut Id="ApplicationStartMenuShortcut"
+                  Name="Dreamhost DNS Manager"
+                  Target="[INSTALLDIR]DNS Manager.exe"
+                  WorkingDirectory="INSTALLDIR"/>
+        <RemoveFolder Id="StartMenuPaulClement" On="uninstall"/>
+        <RegistryValue Root="HKCU" Key="Software\Microsoft\Dreamhost DNS Manager" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+      </Component>
+    </DirectoryRef>
+
+    <Feature Id="Complete" Level="1">
+      <ComponentRef Id="ProductComponent" />
+      <ComponentRef Id="ApplicationShortcut" />
+    </Feature>
+
+    <CustomAction Id="PreventDowngrading" Error="Newer version already installed." />
+
+    <InstallExecuteSequence>
+      <Custom Action="PreventDowngrading" After="FindRelatedProducts">NEWPRODUCTFOUND</Custom>
+      <RemoveExistingProducts After="InstallFinalize" />
+    </InstallExecuteSequence>
+
+    <InstallUISequence>
+      <Custom Action="PreventDowngrading" After="FindRelatedProducts">NEWPRODUCTFOUND</Custom>
+    </InstallUISequence>
+
+  </Product>
+</Wix>
