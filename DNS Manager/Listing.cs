@@ -96,7 +96,7 @@ namespace DNS_Manager
 
         void GetRecords_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            if (e.Error != null)
+            if (e.Error == null)
             {
                 string zone = this.toolStripComboBoxZones.Text ?? string.Empty;
 
