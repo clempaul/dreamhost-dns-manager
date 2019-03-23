@@ -1,6 +1,8 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.489
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DNS Manager", "DNS Manager\DNS Manager.csproj", "{8B1F42C5-E722-4317-BEF9-79A1FB3EDB4B}"
 EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "DNS Manager Installer", "DNS Manager Installer\DNS Manager Installer.wixproj", "{253174AB-EC39-46A8-A896-A04B5087C2CA}"
@@ -9,10 +11,6 @@ Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "DNS Manager Installer", "DN
 	EndProjectSection
 EndProject
 Global
-	GlobalSection(SubversionScc) = preSolution
-		Svn-Managed = True
-		Manager = AnkhSVN - Subversion Support for Visual Studio
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x86 = Debug|x86
@@ -38,5 +36,12 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {994800D3-6F5D-4ABF-8697-CC4047C0077B}
+	EndGlobalSection
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
 	EndGlobalSection
 EndGlobal

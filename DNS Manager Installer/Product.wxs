@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
 
   <?define SkuName="Dreamhost DNS Manager" ?>
   <?define RTMProductVersion="1.0.0.0" ?>
@@ -14,6 +15,7 @@
            Version="$(var.ProductVersion)"
            Manufacturer="$(var.Manufacturer)"
            UpgradeCode="$(var.UpgradeCode)">
+
     <Package Id="$(var.PackageCode)"
              Description="Dreamhost DNS Manager"
              Manufacturer="$(var.Manufacturer)"
@@ -23,23 +25,19 @@
 
     <Icon Id='Icon' SourceFile='$(var.DNS Manager.TargetPath)' />
     <Property Id='ARPPRODUCTICON' Secure='yes' Value='Icon' />
-
-    <Property Id='FRAMEWORK30'>
-      <RegistrySearch Id='Framework30Registry' Type='raw' Root='HKLM'
-      Key='Software\Microsoft\NET Framework Setup\NDP\v3.5' Name='Version' />
-    </Property>
-
+  
     <Property Id="WIXUI_INSTALLDIR" Value="INSTALLDIR" />
 
-    <!--<WixVariable Id='WixUILicenseRtf' Value='License.rtf' />
-    <WixVariable Id='WixUIBannerBmp' Value='Banner.bmp' />
+    <WixVariable Id='WixUILicenseRtf' Value='License.rtf' />
+    <!--WixVariable Id='WixUIBannerBmp' Value='Banner.bmp' />
     <WixVariable Id='WixUIDialogBmp' Value='Dialog.bmp' />-->
 
     <UIRef Id='WixUI_InstallDir' />
     <UIRef Id='WixUI_ErrorProgressText' />
 
-    <Condition Message="This plugin requires the .NET Framework 3.5 or higher.  Please download and install the latest version from http://www.microsoft.com/net/DownloadCurrent.aspx">
-      Installed OR FRAMEWORK30 >= "3.5"
+    <PropertyRef Id="WIX_IS_NETFRAMEWORK_461_OR_LATER_INSTALLED" />
+    <Condition Message="$(var.SkuName) requires .NET Framework 4.6.1 or higher.">
+      <![CDATA[Installed OR WIX_IS_NETFRAMEWORK_461_OR_LATER_INSTALLED]]>
     </Condition>
 
     <Media Id="1" Cabinet="DreamhostDNSManager.cab" EmbedCab="yes" />
@@ -50,14 +48,6 @@
                       OnlyDetect="yes"
                       Language="1033"
                       Property="NEWPRODUCTFOUND" />
-
-      <!--UpgradeVersion Minimum="$(var.RTMProductVersion)"
-                      IncludeMinimum="yes"
-                      Maximum="$(var.ProductVersion)"
-                      IncludeMaximum="no"
-                      Language="1033"
-                      Property="UPGRADEFOUND" /-->
-
     </Upgrade>
 
     <Directory Id="TARGETDIR" Name="SourceDir">
