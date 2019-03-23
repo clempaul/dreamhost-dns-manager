@@ -3,8 +3,8 @@
      xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
 
   <?define SkuName="Dreamhost DNS Manager" ?>
-  <?define RTMProductVersion="1.0.0.0" ?>
-  <?define ProductVersion="1.0.0.0" ?>
+  <?define RTMProductVersion="1.1.0.0" ?>
+  <?define ProductVersion="1.1.0.0" ?>
   <?define UpgradeCode="{09F50B1C-528F-4813-80C8-790A70B0E86B}" ?>
   <?define Manufacturer="Paul Clement" ?>
   <?define PackageCode="*" ?>
